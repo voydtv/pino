@@ -240,9 +240,10 @@ declare namespace pino {
     type SerializedResponse = pinoStdSerializers.SerializedResponse;
     type SerializedRequest = pinoStdSerializers.SerializedRequest;
 
+    type TargetDefinition = string | ((opts: Record<string, unknown>) => Promise<Transform & import("pino-abstract-transport").OnUnknown>)
 
     interface TransportTargetOptions<TransportOptions = Record<string, any>> {
-        target: string | ((opts: Record<string, unknown>) => Transform)
+        target: TargetDefinition
         options: TransportOptions
         level: LevelWithSilent | string
     }
@@ -253,7 +254,7 @@ declare namespace pino {
     }
 
     interface TransportSingleOptions<TransportOptions = Record<string, any>> extends TransportBaseOptions<TransportOptions>{
-        target: string | ((opts: Record<string, unknown>) => Transform)
+        target: TargetDefinition
     }
 
     interface TransportPipelineOptions<TransportOptions = Record<string, any>> extends TransportBaseOptions<TransportOptions>{
