@@ -20,6 +20,7 @@ import type { EventEmitter } from "events";
 import * as pinoStdSerializers from "pino-std-serializers";
 import type { SonicBoom, SonicBoomOpts } from "sonic-boom";
 import type { WorkerOptions } from "worker_threads";
+import { Transform } from "stream";
 
 
 
@@ -241,7 +242,7 @@ declare namespace pino {
 
 
     interface TransportTargetOptions<TransportOptions = Record<string, any>> {
-        target: string
+        target: string | ((opts: Record<string, unknown>) => Transform)
         options: TransportOptions
         level: LevelWithSilent | string
     }
@@ -252,7 +253,7 @@ declare namespace pino {
     }
 
     interface TransportSingleOptions<TransportOptions = Record<string, any>> extends TransportBaseOptions<TransportOptions>{
-        target: string
+        target: string | ((opts: Record<string, unknown>) => Transform)
     }
 
     interface TransportPipelineOptions<TransportOptions = Record<string, any>> extends TransportBaseOptions<TransportOptions>{
